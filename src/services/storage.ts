@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const getFromNetworkFirst = async <T>(key: string, request: Promise<T>): Promise<T> => {
+export async function getFromNetworkFirst<T>(key: string, request: Promise<T>): Promise<T> {
     try {
         const response = await request;
         setInStorage(key, response);
@@ -8,18 +8,18 @@ export const getFromNetworkFirst = async <T>(key: string, request: Promise<T>): 
     } catch (e) {
         return getFromStorage<T>(key);
     }
-};
+}
 
-export const setInStorage = (key: string, value: any) => {
+export function setInStorage(key: string, value: any) {
     const jsonValue = JSON.stringify(value);
     return AsyncStorage.setItem(key, jsonValue);
-};
+}
 
-export const removeFromStorage = (key: string) => {
+export function removeFromStorage(key: string) {
     return AsyncStorage.removeItem(key);
-};
+}
 
-export const getFromStorage = async <T>(key: string): Promise<T> => {
+export async function getFromStorage<T>(key: string): Promise<T> {
     const json = await AsyncStorage.getItem(key);
     return await (json != null ? Promise.resolve(JSON.parse(json)) : Promise.reject(`Key "${key}" not in cache`));
-};
+}

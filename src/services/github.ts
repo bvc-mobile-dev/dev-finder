@@ -4,6 +4,6 @@ const api = axios.create({
     baseURL: 'https://api.github.com/',
 });
 
-export const getUserInfo = (username: string) => {
+export function getUserInfo(username: string) {
     return api.get(`/users/${username}`).then(({ data }) => data);
-};
+}

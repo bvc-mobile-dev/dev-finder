@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text } from 'react-native';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import MapView, { LatLng, Region } from 'react-native-maps';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { deleteUser, getUserByLogin, getUsers } from '../services/users';
@@ -86,39 +86,40 @@ export default function Main({ navigation }: StackScreenProps<any>) {
     return (
         <>
             <StatusBar style="dark" />
-            <MapView
-                ref={mapViewRef}
-                style={styles.map}
-                initialRegion={currentRegion}
-                onMapReady={fitAll}
-                showsUserLocation={true}
-                showsMyLocationButton={false}
-                moveOnMarkerPress={false}
-                toolbarEnabled={false}
-                showsIndoors={false}
-                mapType="mutedStandard"
-                provider="google"
-                mapPadding={{ top: 0, right: 24, bottom: 0, left: 24 }}
-            >
-                {devs.map((dev) => (
-                    <UserMarker
-                        key={dev.id}
-                        data={dev}
-                        handleCalloutPress={(githubUsername) => {
-                            navigation.navigate('Profile', { githubUsername });
-                        }}
-                    />
-                ))}
-            </MapView>
-            <RectButton style={styles.logoutButton} onPress={handleLogout}>
-                <Text style={styles.buttonLabel}>Logout</Text>
-            </RectButton>
+            <View testID="main-screen" style={styles.flex1}>
+                <MapView
+                    ref={mapViewRef}
+                    style={styles.flex1}
+                    initialRegion={currentRegion}
+                    onMapReady={fitAll}
+                    showsUserLocation={true}
+                    showsMyLocationButton={false}
+                    moveOnMarkerPress={false}
+                    toolbarEnabled={false}
+                    showsIndoors={false}
+                    mapType="mutedStandard"
+                    mapPadding={{ top: 0, right: 24, bottom: 0, left: 24 }}
+                >
+                    {devs.map((dev) => (
+                        <UserMarker
+                            key={dev.id}
+                            data={dev}
+                            handleCalloutPress={(githubUsername) => {
+                                navigation.navigate('Profile', { githubUsername });
+                            }}
+                        />
+                    ))}
+                </MapView>
+                <RectButton style={styles.logoutButton} onPress={handleLogout}>
+                    <Text style={styles.buttonLabel}>Logout</Text>
+                </RectButton>
+            </View>
         </>
     );
 }
 
 const styles = StyleSheet.create({
-    map: {
+    flex1: {
         flex: 1,
     },
 

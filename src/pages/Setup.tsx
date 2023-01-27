@@ -36,11 +36,11 @@ export default function Setup({ navigation }: StackScreenProps<any>) {
             });
     }, []);
 
-    const handleMapPress = (event: MapPressEvent | PoiClickEvent) => {
+    function handleMapPress(event: MapPressEvent | PoiClickEvent) {
         setMarkerLocation(event.nativeEvent.coordinate);
-    };
+    }
 
-    const handleSignUp = async () => {
+    async function handleSignUp() {
         setIsAuthenticating(true);
         getGitHubUserInfo(username)
             .catch((err) => {
@@ -66,12 +66,12 @@ export default function Setup({ navigation }: StackScreenProps<any>) {
             })
             .catch((err) => Alert.alert(String(err)))
             .finally(() => setIsAuthenticating(false));
-    };
+    }
 
     return (
         <>
             <StatusBar style="dark" />
-            <View style={styles.container}>
+            <View testID="setup-screen" style={styles.container}>
                 <MapView
                     onPress={handleMapPress}
                     onPoiClick={handleMapPress}
@@ -82,7 +82,6 @@ export default function Setup({ navigation }: StackScreenProps<any>) {
                     toolbarEnabled={false}
                     showsIndoors={false}
                     mapType="mutedStandard"
-                    provider="google"
                     mapPadding={{ top: 0, right: 24, bottom: 128, left: 24 }}
                 >
                     <Marker coordinate={markerLocation} />

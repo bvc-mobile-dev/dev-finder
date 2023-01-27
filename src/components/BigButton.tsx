@@ -22,8 +22,8 @@ export default function BigButton(props: BigButtonProps) {
     );
 }
 
-const styling = (color: string) =>
-    StyleSheet.create({
+function styling(color: string) {
+    return StyleSheet.create({
         button: {
             paddingVertical: 14,
             paddingHorizontal: 32,
@@ -45,3 +45,4 @@ const styling = (color: string) =>
             color: '#FFF',
         },
     });
+}
